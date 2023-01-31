@@ -1,5 +1,5 @@
 <?php    
-    include_once('inc/db.inc.php');
+    include_once('../../inc/db.inc.php');
     /* Bygger upp sql frågan */
     $sqlkod = "SELECT Name, Population FROM country WHERE Name LIKE 'S%' AND Continent = 'Europe'
                   ORDER BY Name";    

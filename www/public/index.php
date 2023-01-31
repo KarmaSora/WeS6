@@ -1,13 +1,22 @@
-<h1>Webbservern fungerar!</h1>
-<p><strong>Denna sida (index.php) skall bytas ut.</strong></p>
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8" >
+    <title>EGY Talk</title>
+</head>
+<body>    
+   <h1>dgnk.safsnmgnck.</h1>
+    <?php    
 
-<?php
-    // Testar att mariaDB fungerar
-     $myPDO = new PDO('mysql:host=mariadb;port=3306;dbname=mysql', 'root', '12345');
-     $result = $myPDO->query("SELECT * FROM db");
-     foreach ($result as $row) {
-        echo $row['Db'] . '<hr>';
-     }
+echo(password_hash("chess" , PASSWORD_DEFAULT));
+   	 if(isset($_SESSION['uid'])){
+   		 include 'inc/private.php';
+   	 }else{
+   		// include 'inc/public.php';
+   		 include 'pages/egytalk/public.php';
 
-     phpinfo();
-?>
+        }
+    ?>
+</body>
+</html>
