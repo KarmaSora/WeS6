@@ -58,17 +58,16 @@ function auth($userName, $passWord) {
 
     function getUserFromUid($uid){
 
-
-        $stmt = $this->db->prepare("SELECT username FROM user WHERE uid = :uid");
+        $stmt = $this->db->prepare("SELECT username, uid FROM user WHERE uid = :uid");
         $stmt->bindValue(":uid", $uid);
         $stmt->execute();
     
         /** Kontroll att resultat finns */
         if ($stmt->rowCount() == 1) {
             // Hämtar användaren, kan endast vara 1 person
-            $uid = $stmt->fetch(PDO::FETCH_ASSOC);
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
         }
-        return $uid ;
+        return $response ;
     }
 
 }
