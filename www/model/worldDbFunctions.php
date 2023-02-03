@@ -31,14 +31,15 @@ function getAllCountries($db){
 }
 
 
-function getSpecifiedCountry($db, $name){
-  
+function getSpecifiedCountry($name){
 
+        $db = ConnectToDb();
 
+        $sqlkod = "SELECT Name, Population, Code FROM country WHERE Name Like :name ORDER BY Name";
 
-        $sqlkod = "SELECT Name, Population, Code FROM country WHERE Name Like $name% ORDER BY Name";
         /* Kör frågan mot databasen egytalk och tabellen post */
         $stmt = $db->prepare($sqlkod);
+        $stmt->bindValue(":name", "$name%");
 
         $stmt->execute();
 
