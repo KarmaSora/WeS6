@@ -1,8 +1,7 @@
 <?php    
     include_once('../../inc/db.inc.php');
     /* Bygger upp sql frågan */
-    $sqlkod = "SELECT Name, Population FROM country WHERE Name LIKE 'S%' AND Continent = 'Europe'
-                  ORDER BY Name";    
+    $sqlkod = "SELECT Name, Population FROM country WHERE Name LIKE 'Z%' ORDER BY Name";    
     
     /* Kör frågan mot databasen world och tabellen country */
     $stmt = $db->prepare($sqlkod);    

@@ -13,7 +13,7 @@ if(isset($_POST['country'])){
     
     /* Anger teckenkodningen för webbläsaren */
     header('Content-Type: text/html; charset=utf-8');
-    
+      
     /* skriver ut resultatet på webbsidan. */
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         echo "<strong>Land: </strong>".$row['Name'];
