@@ -47,3 +47,20 @@ function getSpecifiedCountry($name){
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 }
+
+function getSpecifiedCities($code){
+
+    $db = ConnectToDb();
+
+    $sqlkod = "SELECT Name, Population, CountryCode FROM city WHERE CountryCode Like :code ORDER BY Name";
+
+    /* Kör frågan mot databasen egytalk och tabellen post */
+    $stmt = $db->prepare($sqlkod);
+    $stmt->bindValue(":code", "$code%");
+
+    $stmt->execute();
+
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+}

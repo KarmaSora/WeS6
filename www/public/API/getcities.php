@@ -2,12 +2,12 @@
 
 include("../../model/worldDbFunctions.php");
 
-if(isset($_GET['name'])){
-    $name = filter_input(INPUT_GET, 'name',FILTER_SANITIZE_SPECIAL_CHARS);
+if(isset($_GET['code'])){
+    $code = filter_input(INPUT_GET, 'code',FILTER_SANITIZE_SPECIAL_CHARS);
  
 
 //$db = connectToDb();
-$SQLQuestionResult = getSpecifiedCountry($name);
+$SQLQuestionResult = getSpecifiedCities($code);
 
 header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json');
