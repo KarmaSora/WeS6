@@ -32,4 +32,33 @@ function getAllPosts($db){
  
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getPostsByUid($UID){
+  $db = connectToDb();
+  $sqlkod = "SELECT post.*, user.firstname, user.surname, user.username FROM post NATURAL JOIN user WHERE post.uid = :userID ORDER BY post.date LIMIT 0,30";
+  /* Kör frågan mot databasen egytalk och tabellen post */
+  $stmt = $db->prepare($sqlkod);
+  $stmt->bindValue(':userID', $UID);
+  $stmt->execute();
+ 
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function getPostsAndCommnetsByUid($UID){
+  $db = connectToDb();
+  //$sqlkod = "SELECT post.*, user.firstname, user.surname, user.username FROM post NATURAL JOIN user WHERE comment.uid = :userID ORDER BY post.date LIMIT 0,30";
+
+  $sqlkod = "   SELECT * FROM post NATURAL JOIN comment WHERE comment.uid = :userID ORDER BY post.date LIMIT 0,30";
+           
+  /* Kör frågan mot databasen egytalk och tabellen post */
+  $stmt = $db->prepare($sqlkod);
+  $stmt->bindValue(':userID', $UID);
+  $stmt->execute();
+ 
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 ?>
