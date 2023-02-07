@@ -48,16 +48,46 @@ function getPostsByUid($UID){
 
 function getPostsAndCommnetsByUid($UID){
   $db = connectToDb();
-  //$sqlkod = "SELECT post.*, user.firstname, user.surname, user.username FROM post NATURAL JOIN user WHERE comment.uid = :userID ORDER BY post.date LIMIT 0,30";
 
-  $sqlkod = "   SELECT * FROM post NATURAL JOIN comment WHERE comment.uid = :userID ORDER BY post.date LIMIT 0,30";
-           
+
+  //$sqlkod = "SELECT post.*, user.firstname, user.surname, user.username FROM post NATURAL JOIN user WHERE comment.uid = :userID ORDER BY post.date LIMIT 0,30";
+  $sqlkod = "   SELECT post.*,user.uid,user.firstname,user.surname,user.username  FROM post JOIN user WHERE user.uid = :userID ORDER BY post.date LIMIT 0,30  ";
+
   /* Kör frågan mot databasen egytalk och tabellen post */
-  $stmt = $db->prepare($sqlkod);
+  $stmt = $db->prepare($sqlkod );
   $stmt->bindValue(':userID', $UID);
   $stmt->execute();
- 
-  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $PostsFromUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+  $sqlkodGetComments = " SELECT comment_txt FROM comment JOIN post WHERE comment.pid = post.pid LIMIT 0,30;";
+  $stmt2 = $db->prepare($sqlkodGetComments );
+  $stmt2->execute();
+  $arrayOfComments = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+  
+
+  foreach($arrayOfComments as $comments){
+    $comments['comment_txt']; 
+  }
+
+  for($i = 0; $i<count( $PostsFromUser); $i++){
+/*  
+if($PostsFromUser['post.pid'][$i] = $arrayOfComments['comment.pid'][$i]){
+    }
+
+    if($PostsFromUser['post.pid'] = 3){
+     $PostsFromUser['comment.pid' ] => $arrayOfComments[];
+  }*/
+
+
+  //$ArrayOfJ = '{ $PostsFromUser,  $arrayofCommnets.[$i].["comment_txt"}';
+  
+  }
+
+  
+  
+
+  return $PostsFromUser ;
 }
 
 

@@ -11,7 +11,7 @@ if(isset($_GET['userID'])){
     
     //filter_input(INPUT_GET, 'userID',FILTER_SANITIZE_SPECIAL_CHARS);
 
-$result = getPostsByUid($userID);
+$result = getPostsAndCommnetsByUid($userID);
 
 // Behövs för session-cookies och anger att formatet är json
 header('Access-Control-Allow-Credentials: true');
