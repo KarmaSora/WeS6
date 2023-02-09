@@ -49,45 +49,49 @@ function getPostsByUid($UID){
 function getPostsAndCommnetsByUid($UID){
   $db = connectToDb();
 
+//skapa en array genom att hämta alla posts och allt i user förutom password från egytalk tabellerna user och post. Söker efter uid och har limit på 30. 
+//arrayen innehåller alla alla poster, när de skrivs och vilka skrev posterna. 
+//kan behöva separera SQL koden so endast post txt syns här
+  $sqlkod = "SELECT post.*,user.uid,user.firstname,user.surname,user.username  FROM post JOIN user WHERE user.uid = :userID ORDER BY post.date LIMIT 0,30  ";
 
-  //$sqlkod = "SELECT post.*, user.firstname, user.surname, user.username FROM post NATURAL JOIN user WHERE comment.uid = :userID ORDER BY post.date LIMIT 0,30";
-  $sqlkod = "   SELECT post.*,user.uid,user.firstname,user.surname,user.username  FROM post JOIN user WHERE user.uid = :userID ORDER BY post.date LIMIT 0,30  ";
-
-  /* Kör frågan mot databasen egytalk och tabellen post */
+  // Kör frågan mot databasen egytalk och tabellen post 
   $stmt = $db->prepare($sqlkod );
   $stmt->bindValue(':userID', $UID);
   $stmt->execute();
   $PostsFromUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-  $sqlkodGetComments = " SELECT comment_txt FROM comment JOIN post WHERE comment.pid = post.pid LIMIT 0,30;";
-  $stmt2 = $db->prepare($sqlkodGetComments );
+  //skapar array av comments
+
+ // $sqlkodGetComments = " SELECT comment_txt, pid FROM comment JOIN post WHERE comment.pid = post.pid LIMIT 0,30;";
+ $sqlkodGetComments = "SELECT comment.comment_txt, comment.pid, post.pid FROM comment JOIN post WHERE comment.pid = post.pid LIMIT 0,30;";
+
+  $stmt2 = $db->prepare($sqlkodGetComments);
   $stmt2->execute();
-  $arrayOfComments = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-  
-
-  foreach($arrayOfComments as $comments){
-    $comments['comment_txt']; 
-  }
-
-  for($i = 0; $i<count( $PostsFromUser); $i++){
-/*  
-if($PostsFromUser['post.pid'][$i] = $arrayOfComments['comment.pid'][$i]){
-    }
-
-    if($PostsFromUser['post.pid'] = 3){
-     $PostsFromUser['comment.pid' ] => $arrayOfComments[];
-  }*/
-
-
-  //$ArrayOfJ = '{ $PostsFromUser,  $arrayofCommnets.[$i].["comment_txt"}';
-  
-  }
+  $arrayOfComments = $stmt2->fetchAll(PDO::FETCH_ASSOC);      //arrayOfComments[] motsvarar en array med namnet posts som det skulle kallas enlgit uppgiften
 
   
+    foreach ($PostsFromUser as $post) {
+    $post['comments'] = [];
+    foreach ($arrayOfComments as $comment) {
+      if ($comment['pid'] == $post['pid']) {
+        $post['comments'][] = $comment['comment_txt'];
+      }
+    }}
+
   
 
-  return $PostsFromUser ;
+  // en array som lopar igenom Posts 
+  
+
+
+
+  //ersättning till koden den komenterade koden ovan
+   // $PostsFromUser = getPostsByUid($UID);
+
+ 
+
+  return $PostsFromUser ;     // har en säkerhets kopia av den funktionen innan ändringen, kopian finns i drive!
 }
 
 
