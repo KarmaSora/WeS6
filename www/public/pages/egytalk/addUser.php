@@ -18,7 +18,7 @@ if(isset($_POST['firstName'],$_POST['surName'],$_POST['userName'],$_POST['pwd'])
     // Om INSERT gick bra! Om man användarnamn är upptaget fungerar inte insert
     try{
         $stmt->execute();
-        header('Location: /addUserForm.html'); // Borde visa att allt gick bra!
+        header('Location: /addUserForm.html'); // Borde visa att allt gick bra!, sidan finns inte än, skickar användare till index sidan för tillfätllet
     }catch(Exception $e){
         header('Content-Type: text/html; charset=utf-8');
         echo "<p>Kunde inte lägga till användaren. Kontrollera användarnamnet</p>";

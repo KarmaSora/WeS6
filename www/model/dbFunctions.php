@@ -65,23 +65,11 @@ function getPostsAndCommnetsByUid($UID)
   $stmt->execute();
   $PostsFromUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  //PostsFromUser[$i][pid]; 
-
-  /*$data['comments] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      $data['pid] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    */
-
-
-  //skapar array av comments
-
-  // $sqlkodGetComments = " SELECT comment_txt, pid FROM comment JOIN post WHERE comment.pid = post.pid LIMIT 0,30;";
   $sqlkodGetComments = "SELECT comment.comment_txt, comment.pid FROM comment LIMIT 0,30";
 
   $stmt2 = $db->prepare($sqlkodGetComments);
   $stmt2->execute();
   $arrayOfComments = $stmt2->fetchAll(PDO::FETCH_ASSOC);      //arrayOfComments[] motsvarar en array med namnet posts som det skulle kallas enlgit uppgiften
-
-
 
   for ($i = 0; $i < count($PostsFromUser); $i++) {
     $PostsFromUser[$i]['comments'] = [];
